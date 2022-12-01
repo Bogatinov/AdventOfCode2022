@@ -1,4 +1,7 @@
-﻿namespace AdventOfCode2022.Advents
+﻿using System.Collections.Generic;
+using Xunit;
+
+namespace AdventOfCode2022.Advents
 {
     public class Day01 : DayAdvent<int>
     {
@@ -8,7 +11,7 @@
 
         public override int Solve1()
         {
-            var result = int.MinValue;
+            var result = 0;
             var elfCalories = 0;
             foreach (var line in Lines)
             {
@@ -27,26 +30,40 @@
 
         public override int Solve2()
         {
-            var queue = new PriorityQueue<int, int>();
-            var elfCalories = 0;
+            int best, second, third, elfCalories;
+            best = second = third = elfCalories = 0;
             foreach (var line in Lines)
             {
                 if (line == string.Empty)
                 {
-                    queue.Enqueue(elfCalories, -1 * elfCalories);
+                    SortMaxValues();
                     elfCalories = 0;
                     continue;
                 }
 
                 elfCalories += int.Parse(line);
             }
-            queue.Enqueue(elfCalories, -1 * elfCalories);
 
-            var best = queue.Dequeue();
-            var second = queue.Dequeue();
-            var third = queue.Dequeue();
+            SortMaxValues();
 
             return best + second + third;
+
+            void SortMaxValues()
+            {
+                if (elfCalories > best)
+                {
+                    third = second;
+                    second = best;
+                    best = elfCalories;
+                }
+                else if (elfCalories > second)
+                {
+                    third = second;
+                    second = elfCalories;
+                }
+                else if (elfCalories > third)
+                    third = elfCalories;
+            }
         }
     }
 }
