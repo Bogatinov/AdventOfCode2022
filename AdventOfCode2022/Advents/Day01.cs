@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Xunit;
-
-namespace AdventOfCode2022.Advents
+﻿namespace AdventOfCode2022.Advents
 {
     public class Day01 : DayAdvent<int>
     {
